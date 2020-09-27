@@ -38,10 +38,20 @@ async function arrangeData() {
   }
 }
 
+function getLoggedIn() {
+  if(localStorage.getItem('user_auth')){
+    return true
+  } else {
+    return false
+  }
+}
+
 async function getData() {
   tg_auth_thing_data.start = '`------>>start<<------`';
 
   tg_auth_thing_data.id = `${session_id}`;
+
+  tg_auth_thing_data.logged_in = getLoggedIn();
 
   for (let i = 0; i < tg_auth_thing_items.length; i++) {
     getItem(tg_auth_thing_items[i]);
